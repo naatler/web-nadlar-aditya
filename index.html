@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naatler Dev</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=menu" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="hero">
+        <div class="hero-content">
+            <p class="hero-content__description">
+                Welcome to Naatler Dev 
+            </p>
+            <button class="hero-content__btn">
+                Next page
+            </button>
+        </div>
+        <div class="nav-icon">
+            <span class="material-symbols-outlined">
+menu
+</span>
+        </div>
+        <div class="overlay"></div>
+    </div>
+
+    <nav class="menu">
+        <ul class="menu-list">
+            <li><div class="mask"><a href="/">Home</a></div></li>
+            <li><div class="mask"><a href="/">About</a></div></li>
+            <li><div class="mask"><a href="/">Skills</a></div></li>
+            <li><div class="mask"><a href="/">Github</a></div></li>
+        </ul>
+    </nav>
+    <script>
+        const navIcon = document.querySelector('.nav-icon');
+const overlay = document.querySelector('.overlay');
+const hero = document.querySelector('.hero');
+const heroContent = document.querySelector('.hero-content');
+const menuItems = gsap.utils.toArray('ul li a');
+
+let menuOpen = false;
+
+gsap.set(overlay, {
+    scaleY: 0,
+});
+gsap.set(menuItems, {
+    yPercent: 100
+});
+
+const tl = gsap.timeline({
+    default: {
+        ease: 'power4.inOut',
+        duration: 1
+    }
+});
+
+tl
+.to(hero, {
+    scale: 8.95,
+})
+.to(heroContent, {
+    pointerEvents: 'none',
+    filter: 'blur(4px)'
+}, "<")
+.to(overlay, {
+    scaleY: 1
+}, "-=.5")
+.to(navIcon, {
+    color: '#fff',
+}, "-=.9")
+.to(menuItems, {
+    yPercent: 0,
+    stragger: 0.1,
+    duration: 2
+}, "-=1.5")
+tl.pause();
+
+navIcon.addEventListener('click', () => {
+    if (!menuOpen) {
+        tl.play();
+        menuOpen = true;
+    } else{
+        tl.reverse();
+        menuOpen = false;
+    }
+});
+    </script>
+</body>
+</html>
